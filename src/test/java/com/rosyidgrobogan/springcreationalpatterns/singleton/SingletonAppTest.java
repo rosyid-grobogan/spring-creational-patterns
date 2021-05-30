@@ -27,4 +27,28 @@ class SingletonAppTest {
         System.out.println(counter2.getValue()); // 3
         System.out.println(counter3.getValue()); // 3
     }
+
+    // Problem: Race Condition
+    private void incrementCounterAsync(Counter counter, int total) {
+        new Thread(() -> {
+            for (int i = 0; i < total; i++) {
+                counter.increment();
+            }
+        }).start();
+    }
+
+    // test: race condition
+    @Test
+    void incrementRaceCondition() throws InterruptedException {
+        Counter counter1 = applicationContext.getBean(Counter.class);
+        Counter counter2 = applicationContext.getBean(Counter.class);
+
+        incrementCounterAsync(counter1, 1000_000);
+        incrementCounterAsync(counter2, 1000_000);
+
+        Thread.sleep(5_000L);
+
+        System.out.println(counter1.getValue()); // 1094228 (bisa berubah-ubah
+        System.out.println(counter2.getValue()); // 1094228
+    }
 }
