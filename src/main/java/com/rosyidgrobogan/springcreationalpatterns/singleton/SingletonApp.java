@@ -10,4 +10,9 @@ public class SingletonApp {
     public Counter counter(){
         return new Counter();
     }
+
+    @Bean
+    public CounterSolution counterSolution(){
+        return new CounterSolution();
+    }
 }
