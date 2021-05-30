@@ -1,9 +1,11 @@
 package com.rosyidgrobogan.springcreationalpatterns.builder;
 
 import lombok.Builder;
+import lombok.Setter;
 import lombok.ToString;
 
 @Builder
+@Setter
 @ToString
 public class ProductBuilderLombok {
 
